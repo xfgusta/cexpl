@@ -111,14 +111,20 @@ def main(argv):
 
         # perform the compilation
         try:
-            result = api.compile_src(src, compiler, execute)
+            result = api.compile_src(src, compiler, language, execute)
         except cex.NotFoundError:
             die(f'Compiler {compiler} not found')
         except cex.CexError:
             die('Failed to compile')
 
         info(f'Using the {compiler} compiler')
-        process_result(result, execute, args.verbose)
+
+        # show the generated assembly
+        for asm in result['asm']:
+            print(asm['text'])
+
+        # show stdout/stderr
+        process_output(result, execute, args.verbose)
 
 def list_languages():
     """List available languages"""
@@ -146,11 +152,8 @@ def list_compilers(name):
     for compiler in compilers:
         print(f'{Fore.GREEN}{compiler["id"]}{Fore.RESET} - {compiler["name"]}')
 
-def process_result(result, execute, verbose):
-    """Process the compilation result"""
-    for asm in result['asm']:
-        print(asm['text'])
-
+def process_output(result, execute, verbose):
+    """Process stdout and stderr streams results"""
     if execute:
         execute_result = result['execResult']
         build_result = execute_result['buildResult']
