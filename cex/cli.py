@@ -87,13 +87,38 @@ def main(argv):
     elif args.list_compilers is not False:
         list_compilers(args.list_compilers)
     else:
-        compile_source(
-            args.file,
-            args.compiler,
-            args.language,
-            args.execute,
-            args.verbose
-        )
+        file = args.file
+        if not file:
+            die('No input file')
+
+        compiler = args.compiler
+        language = args.language
+
+        # try to get the default compiler if none was given
+        if not compiler:
+            if language:
+                compiler = get_compiler_by_lang(language)
+            else:
+                compiler = get_compiler_by_file_ext(file.name)
+
+            if not compiler:
+                die('Could not determine the default compiler')
+
+        src = file.read()
+        file.close()
+
+        execute = args.execute
+
+        # perform the compilation
+        try:
+            result = api.compile_src(src, compiler, execute)
+        except cex.NotFoundError:
+            die(f'Compiler {compiler} not found')
+        except cex.CexError:
+            die('Failed to compile')
+
+        info(f'Using the {compiler} compiler')
+        process_result(result, execute, args.verbose)
 
 def list_languages():
     """List available languages"""
@@ -120,38 +145,6 @@ def list_compilers(name):
 
     for compiler in compilers:
         print(f'{Fore.GREEN}{compiler["id"]}{Fore.RESET} - {compiler["name"]}')
-
-def compile_source(file, compiler, language, execute, verbose):
-    """Perform the compilation"""
-    if not file:
-        die('No input file')
-
-    # try to get the default compiler if none was given
-    if not compiler:
-        if language:
-            compiler = get_compiler_by_lang(language)
-        else:
-            compiler = get_compiler_by_file_ext(file.name)
-
-        if not compiler:
-            die('Could not determine the default compiler')
-
-    src = file.read()
-
-    try:
-        result = api.compile_src(
-            src,
-            compiler,
-            language,
-            execute
-        )
-    except cex.NotFoundError:
-        die(f'Compiler "{compiler}" not found')
-    except cex.CexError:
-        die('Failed to compile')
-
-    info(f'Using the {compiler} compiler')
-    process_result(result, execute, verbose)
 
 def process_result(result, execute, verbose):
     """Process the compilation result"""
