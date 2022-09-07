@@ -121,52 +121,6 @@ def list_compilers(name):
     for compiler in compilers:
         print(f'{Fore.GREEN}{compiler["id"]}{Fore.RESET} - {compiler["name"]}')
 
-def get_compiler_by_lang(language):
-    """Get the default compiler for a language"""
-    try:
-        langs = api.get_languages(fields=['id', 'defaultCompiler'])
-    except cex.CexError:
-        die('Could not get the list of available languages')
-
-    for lang in langs:
-        if lang['id'] == language:
-            return lang['defaultCompiler']
-
-    return None
-
-def get_compiler_by_file_ext(filename):
-    """Get the default compiler based on the file extension"""
-    ext = os.path.splitext(filename)[1]
-    if not ext:
-        return None
-
-    try:
-        langs = api.get_languages(
-            fields=['name', 'extensions', 'defaultCompiler']
-        )
-    except cex.CexError:
-        die('Could not get the list of available languages')
-
-    # filter languages that have the same file extension
-    langs = list(filter(lambda lang: ext in lang['extensions'], langs))
-
-    if not langs:
-        return None
-
-    if len(langs) > 1:
-        print(f'Default compilers for {ext} extension:\n')
-
-        for lang in langs:
-            compiler = lang['defaultCompiler']
-            print(f'{Fore.GREEN}{compiler}{Fore.RESET} - {lang["name"]}')
-
-        compiler = input('\nChoose one compiler: ')
-        print()
-
-        return compiler
-
-    return langs[0]['defaultCompiler']
-
 def compile_source(file, compiler, language, execute, verbose):
     """Perform the compilation"""
     if not file:
@@ -246,6 +200,52 @@ def show_output(stdout, stderr):
         info('STDERR:')
         for line in stderr:
             print(line['text'])
+
+def get_compiler_by_lang(language):
+    """Get the default compiler for a language"""
+    try:
+        langs = api.get_languages(fields=['id', 'defaultCompiler'])
+    except cex.CexError:
+        die('Could not get the list of available languages')
+
+    for lang in langs:
+        if lang['id'] == language:
+            return lang['defaultCompiler']
+
+    return None
+
+def get_compiler_by_file_ext(filename):
+    """Get the default compiler based on the file extension"""
+    ext = os.path.splitext(filename)[1]
+    if not ext:
+        return None
+
+    try:
+        langs = api.get_languages(
+            fields=['name', 'extensions', 'defaultCompiler']
+        )
+    except cex.CexError:
+        die('Could not get the list of available languages')
+
+    # filter languages that have the same file extension
+    langs = list(filter(lambda lang: ext in lang['extensions'], langs))
+
+    if not langs:
+        return None
+
+    if len(langs) > 1:
+        print(f'Default compilers for {ext} extension:\n')
+
+        for lang in langs:
+            compiler = lang['defaultCompiler']
+            print(f'{Fore.GREEN}{compiler}{Fore.RESET} - {lang["name"]}')
+
+        compiler = input('\nChoose one compiler: ')
+        print()
+
+        return compiler
+
+    return langs[0]['defaultCompiler']
 
 def info(string):
     """Print a info message"""
