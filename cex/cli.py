@@ -69,7 +69,7 @@ def main(argv):
     )
 
     parser.add_argument(
-        '-V', '--verbose',
+        '-v', '--verbose',
         action='store_true',
         help='Show additional details'
     )
