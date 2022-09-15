@@ -216,6 +216,10 @@ def get_compiler_by_file_ext(filename):
     if not ext:
         return None
 
+    # don't look for C++ compilers when the extension is .c
+    if ext == '.c':
+        return get_compiler_by_lang('c')
+
     try:
         langs = api.get_languages(
             fields=['name', 'extensions', 'defaultCompiler']
@@ -237,7 +241,6 @@ def get_compiler_by_file_ext(filename):
             print(f'{Fore.GREEN}{compiler}{Fore.RESET} - {lang["name"]}')
 
         compiler = input('\nChoose one compiler: ')
-        print()
 
         return compiler
 
