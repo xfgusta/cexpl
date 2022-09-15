@@ -67,24 +67,31 @@ class Cex:
 
         return _request('GET', url, params={'fields': fields})
 
-    def compile_src(self, src, compiler, language=None, execute=False):
+    def compile_src(
+        self,
+        src,
+        compiler,
+        language=None,
+        cflags=None,
+        execute=False
+    ):
         """Perform a compilation"""
         url = f'{self._api}/compiler/{compiler}/compile'
 
         payload = {
             'source': src,
             'options': {
-                #'executeParameters': {
-                #    'args': None,
-                #    'stdin': None,
-                #},
                 'filters': {
                     'execute': execute
                 },
-            },
-
-            'lang': language
+            }
         }
+
+        if language:
+            payload['lang'] = language
+
+        if cflags:
+            payload['options']['userArguments'] = cflags
 
         return _request('POST', url, json=payload)
 

@@ -57,6 +57,12 @@ def main(argv):
     )
 
     parser.add_argument(
+        '--cflags',
+        metavar='FLAGS',
+        help='Specify compiler flags'
+    )
+
+    parser.add_argument(
         '-e', '--execute',
         action='store_true',
         help='Execute the code'
@@ -111,7 +117,13 @@ def main(argv):
 
         # perform the compilation
         try:
-            result = api.compile_src(src, compiler, language, execute)
+            result = api.compile_src(
+                src,
+                compiler,
+                language,
+                args.cflags,
+                execute
+            )
         except cex.NotFoundError:
             die(f'Compiler {compiler} not found')
         except cex.CexError:
