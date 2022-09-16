@@ -51,7 +51,7 @@ def main(argv):
     )
 
     parser.add_argument(
-        '-l', '--language',
+        '-l', '--lang',
         metavar='LANG',
         help='Specify the language'
     )
@@ -98,7 +98,7 @@ def main(argv):
             die('No input file')
 
         compiler = args.compiler
-        language = args.language
+        language = args.lang
 
         # try to get the default compiler if none was given
         if not compiler:
