@@ -69,6 +69,12 @@ def main(argv):
     )
 
     parser.add_argument(
+        '--compare',
+        action='store_true',
+        help='Compare the source code with the assembly'
+    )
+
+    parser.add_argument(
         '-v', '--verbose',
         action='store_true',
         help='Show additional details'
@@ -132,8 +138,7 @@ def main(argv):
         info(f'Using the {compiler} compiler')
 
         # show the generated assembly
-        for asm in result['asm']:
-            print(asm['text'])
+        process_asm(result['asm'], src, args.compare)
 
         # show stdout/stderr
         process_output(result, execute, args.verbose)
@@ -163,6 +168,27 @@ def list_compilers(name):
 
     for compiler in compilers:
         print(f'{Fore.GREEN}{compiler["id"]}{Fore.RESET} - {compiler["name"]}')
+
+def process_asm(asm_result, src, compare=False):
+    """Process asm and compare it to src if necessary"""
+    if compare:
+        lines = src.split('\n')
+        prev_line = -1
+
+        for asm in asm_result:
+            if asm['source']:
+                line = asm['source']['line']
+                if line and line != prev_line:
+                    code = lines[line - 1].strip()
+                    print(f'{Fore.YELLOW}+ Ln {line}{Fore.RESET} {Fore.GREEN}{code}{Fore.RESET}')
+                    prev_line = line
+
+                print(f'{Fore.YELLOW}|{Fore.RESET} {asm["text"]}')
+            else:
+                print(asm['text'])
+    else:
+        for asm in asm_result:
+            print(asm['text'])
 
 def process_output(result, execute, verbose):
     """Process stdout and stderr streams results"""
