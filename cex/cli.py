@@ -63,7 +63,7 @@ def main(argv):
     )
 
     parser.add_argument(
-        '-e', '--execute',
+        '-e', '--exec',
         action='store_true',
         help='Execute the code'
     )
@@ -119,7 +119,7 @@ def main(argv):
         src = file.read()
         file.close()
 
-        execute = args.execute
+        execute = args.exec
 
         # perform the compilation
         try:
