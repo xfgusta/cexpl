@@ -178,18 +178,14 @@ def process_asm(asm_result, src, compare=False):
     if compare:
         lines = src.split('\n')
         prev_line = -1
-
         for asm in asm_result:
             if asm['source']:
                 line = asm['source']['line']
                 if line and line != prev_line:
                     code = lines[line - 1].strip()
-                    print(f'{Fore.YELLOW}+ Ln {line}{Fore.RESET} {Fore.GREEN}{code}{Fore.RESET}')
+                    print(f'{line} {Fore.GREEN}{code}{Fore.RESET}')
                     prev_line = line
-
-                print(f'{Fore.YELLOW}|{Fore.RESET} {asm["text"]}')
-            else:
-                print(asm['text'])
+            print(asm["text"])
     else:
         for asm in asm_result:
             print(asm['text'])
