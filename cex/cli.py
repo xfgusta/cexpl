@@ -104,12 +104,15 @@ def main(argv):
             die('No input file')
 
         compiler = args.compiler
-        language = args.lang
+        lang = args.lang
+        execute = args.exec
+        cflags = args.cflags
+        verbose = args.verbose
 
         # try to get the default compiler if none was given
         if not compiler:
-            if language:
-                compiler = get_compiler_by_lang(language)
+            if lang:
+                compiler = get_compiler_by_lang(lang)
             else:
                 compiler = get_compiler_by_file_ext(file.name)
 
@@ -119,15 +122,13 @@ def main(argv):
         src = file.read()
         file.close()
 
-        execute = args.exec
-
         # perform the compilation
         try:
             result = api.compile_src(
                 src,
                 compiler,
-                language,
-                args.cflags,
+                lang,
+                cflags,
                 execute
             )
         except cex.NotFoundError:
@@ -136,12 +137,15 @@ def main(argv):
             die('Failed to compile')
 
         info(f'Using the {compiler} compiler')
+        if verbose:
+            options = ' '.join(result['compilationOptions'])
+            info(f'Compilation options: {options}')
 
         # show the generated assembly
         process_asm(result['asm'], src, args.compare)
 
         # show stdout/stderr
-        process_output(result, execute, args.verbose)
+        process_output(result, execute, verbose)
 
 def list_languages():
     """List available languages"""
