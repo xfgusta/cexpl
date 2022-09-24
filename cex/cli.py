@@ -139,7 +139,7 @@ def main(argv):
         if verbose:
             info(f'Using the {compiler} compiler')
             options = ' '.join(result['compilationOptions'])
-            info(f'Compilation options: {options}')
+            info(f'Compilation options:{Fore.RESET} {options}')
 
         # show the generated assembly
         process_asm(result['asm'], src, args.compare)
@@ -202,17 +202,17 @@ def process_output(result, execute, verbose):
 
         if verbose:
             show_output(result['stdout'], result['stderr'])
-            info(f'ASM generation compiler returned: {result["code"]}')
+            info(f'ASM generation compiler returned:{Fore.RESET} {result["code"]}')
 
             show_output(
                 build_result.get('stdout', []),
                 build_result.get('stderr', [])
             )
-            info(f'Execution build compiler returned: {build_result["code"]}')
+            info(f'Execution build compiler returned:{Fore.RESET} {build_result["code"]}')
 
             if execute_result['didExecute']:
                 show_output(execute_result['stdout'], execute_result['stderr'])
-                info(f'Program returned: {execute_result["code"]}')
+                info(f'Program returned:{Fore.RESET} {execute_result["code"]}')
         else:
             stdout = result['stdout'] + build_result.get('stdout', [])
             stderr = result['stderr'] + build_result.get('stderr', [])
@@ -225,7 +225,7 @@ def process_output(result, execute, verbose):
     else:
         show_output(result['stdout'], result['stderr'])
         if verbose:
-            info(f'Compiler returned: {result["code"]}')
+            info(f'Compiler returned:{Fore.RESET} {result["code"]}')
 
 def show_output(stdout, stderr):
     """Show stdout and stderr streams"""
