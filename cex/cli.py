@@ -136,8 +136,8 @@ def main(argv):
         except cex.CexError:
             die('Failed to compile')
 
-        info(f'Using the {compiler} compiler')
         if verbose:
+            info(f'Using the {compiler} compiler')
             options = ' '.join(result['compilationOptions'])
             info(f'Compilation options: {options}')
 
