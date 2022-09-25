@@ -73,6 +73,7 @@ class Cex:
         compiler,
         language=None,
         cflags=None,
+        skip_asm=False,
         execute=False
     ):
         """Perform a compilation"""
@@ -81,6 +82,9 @@ class Cex:
         payload = {
             'source': src,
             'options': {
+                'compilerOptions': {
+                    'skipAsm': skip_asm
+                },
                 'filters': {
                     'execute': execute
                 },

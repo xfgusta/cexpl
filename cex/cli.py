@@ -69,6 +69,12 @@ def main(argv):
     )
 
     parser.add_argument(
+        '-s', '--skip-asm',
+        action='store_true',
+        help='Don\'t show the generated assembly'
+    )
+
+    parser.add_argument(
         '--compare',
         action='store_true',
         help='Compare the source code with the assembly'
@@ -105,6 +111,7 @@ def main(argv):
 
         compiler = args.compiler
         lang = args.lang
+        skip_asm = args.skip_asm
         execute = args.exec
         cflags = args.cflags
         verbose = args.verbose
@@ -129,6 +136,7 @@ def main(argv):
                 compiler,
                 lang,
                 cflags,
+                skip_asm,
                 execute
             )
         except cex.NotFoundError:
@@ -142,7 +150,8 @@ def main(argv):
             info(f'Compilation options:{Fore.RESET} {options}')
 
         # show the generated assembly
-        process_asm(result['asm'], src, args.compare)
+        if not skip_asm:
+            process_asm(result['asm'], src, args.compare)
 
         # show stdout/stderr
         process_output(result, execute, verbose)
