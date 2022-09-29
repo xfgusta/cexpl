@@ -74,6 +74,7 @@ class Cex:
         language=None,
         cflags=None,
         args=None,
+        stdin=None,
         skip_asm=False,
         execute=False
     ):
@@ -102,6 +103,9 @@ class Cex:
 
         if args:
             payload['options']['executeParameters']['args'] = args
+
+        if stdin:
+            payload['options']['executeParameters']['stdin'] = stdin
 
         return _request('POST', url, json=payload)
 

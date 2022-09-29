@@ -68,6 +68,12 @@ def main(argv):
     )
 
     parser.add_argument(
+        '--stdin',
+        nargs='+',
+        help='Specify the command-line STDIN'
+    )
+
+    parser.add_argument(
         '-e', '--exec',
         action='store_true',
         help='Execute the code'
@@ -120,8 +126,12 @@ def main(argv):
         execute = args.exec
         cflags = args.cflags
         argv = args.args
+        stdin = args.stdin
         compare = args.compare
         verbose = args.verbose
+
+        if stdin:
+            stdin = '\n'.join(stdin)
 
         # try to get the default compiler if none was given
         if not compiler:
@@ -144,6 +154,7 @@ def main(argv):
                 lang,
                 cflags,
                 argv,
+                stdin,
                 skip_asm,
                 execute
             )
