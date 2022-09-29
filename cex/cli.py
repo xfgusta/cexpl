@@ -46,13 +46,11 @@ def main(argv):
 
     parser.add_argument(
         '-c', '--compiler',
-        metavar='COMPILER',
         help='Specify the compiler'
     )
 
     parser.add_argument(
         '-l', '--lang',
-        metavar='LANG',
         help='Specify the language'
     )
 
