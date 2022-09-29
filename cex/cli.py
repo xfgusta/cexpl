@@ -61,6 +61,13 @@ def main(argv):
     )
 
     parser.add_argument(
+        '-a', '--args',
+        metavar='ARGV',
+        nargs='+',
+        help='Specify the command-line arguments'
+    )
+
+    parser.add_argument(
         '-e', '--exec',
         action='store_true',
         help='Execute the code'
@@ -112,6 +119,8 @@ def main(argv):
         skip_asm = args.skip_asm
         execute = args.exec
         cflags = args.cflags
+        argv = args.args
+        compare = args.compare
         verbose = args.verbose
 
         # try to get the default compiler if none was given
@@ -134,6 +143,7 @@ def main(argv):
                 compiler,
                 lang,
                 cflags,
+                argv,
                 skip_asm,
                 execute
             )
@@ -149,7 +159,7 @@ def main(argv):
 
         # show the generated assembly
         if not skip_asm:
-            process_asm(result['asm'], src, args.compare)
+            process_asm(result['asm'], src, compare)
 
         # show stdout/stderr
         process_output(result, execute, verbose)

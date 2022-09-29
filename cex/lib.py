@@ -73,6 +73,7 @@ class Cex:
         compiler,
         language=None,
         cflags=None,
+        args=None,
         skip_asm=False,
         execute=False
     ):
@@ -85,6 +86,8 @@ class Cex:
                 'compilerOptions': {
                     'skipAsm': skip_asm
                 },
+                'executeParameters': {
+                },
                 'filters': {
                     'execute': execute
                 },
@@ -96,6 +99,9 @@ class Cex:
 
         if cflags:
             payload['options']['userArguments'] = cflags
+
+        if args:
+            payload['options']['executeParameters']['args'] = args
 
         return _request('POST', url, json=payload)
 
