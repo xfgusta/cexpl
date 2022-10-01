@@ -109,6 +109,60 @@ class Cex:
 
         return _request('POST', url, json=payload)
 
+    def generate_short_link(
+        self,
+        src,
+        compiler,
+        language=None,
+        cflags=None,
+        args=None,
+        stdin=None,
+        execute=False
+    ):
+        """Save the given state to a shortlink"""
+        url = f'{self._api}/shortener'
+
+        session = {
+            'id': 1,
+            'source': src,
+            'compilers': [
+                {
+                    'id': compiler,
+                }
+            ]
+        }
+
+        if execute:
+            executor = {
+                'compiler': {
+                    'id': compiler
+                }
+            }
+
+            if args:
+                executor['arguments'] = args
+
+            if stdin:
+                executor['stdin'] = stdin
+
+            session['executors'] = [executor]
+
+        if language:
+            session['language'] = language
+
+        if cflags:
+            session['compilers'][0]['options'] = cflags
+            if execute:
+                session['executors'][0]['compiler']['options'] = cflags
+
+        payload = {
+            'sessions': [
+                session
+            ]
+        }
+
+        return _request('POST', url, json=payload)
+
 def _request(method, url, **kwargs):
     """Make a request to the API"""
     try:

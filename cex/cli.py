@@ -92,6 +92,12 @@ def main(argv):
     )
 
     parser.add_argument(
+        '-L', '--link',
+        action='store_true',
+        help='Generate a link for the compilation state'
+    )
+
+    parser.add_argument(
         '-v', '--verbose',
         action='store_true',
         help='Show additional details'
@@ -128,6 +134,7 @@ def main(argv):
         argv = args.args
         stdin = args.stdin
         compare = args.compare
+        link = args.link
         verbose = args.verbose
 
         if stdin:
@@ -167,6 +174,24 @@ def main(argv):
             info(f'Using the {compiler} compiler')
             options = ' '.join(result['compilationOptions'])
             info(f'Compilation options:{Fore.RESET} {options}')
+
+        # show the generated link
+        if link:
+            try:
+                link_result = api.generate_short_link(
+                    src,
+                    compiler,
+                    lang,
+                    cflags,
+                    argv,
+                    stdin,
+                    execute
+                )
+            except cex.CexError:
+                die('Cannot generate the link')
+
+            url = link_result['url']
+            info(f'URL:{Fore.RESET} {url}')
 
         # show the generated assembly
         if not skip_asm:
