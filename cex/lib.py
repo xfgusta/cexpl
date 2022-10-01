@@ -37,6 +37,8 @@ class Cex:
 
     def set_host(self, host):
         """Set a Compiler Explorer host"""
+        if not host.lower().startswith(('http://', 'https://')):
+            host = f'http://{host}'
         self._host = host
         self._api = f'{self._host}/api'
 
