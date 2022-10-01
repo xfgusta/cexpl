@@ -24,7 +24,7 @@ def main(argv):
     )
 
     parser.add_argument(
-        '--host',
+        '-H', '--host',
         metavar='URL',
         default='https://godbolt.org',
         help='Specify the Compiler Explorer host (default: %(default)s)'
@@ -86,7 +86,7 @@ def main(argv):
     )
 
     parser.add_argument(
-        '--compare',
+        '-C', '--compare',
         action='store_true',
         help='Compare the source code with the assembly'
     )
