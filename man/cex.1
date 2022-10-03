@@ -1,0 +1,66 @@
+.TH cex 1 "2022-10-03" "cex"
+
+.SH NAME
+cex \- command-line tool to interact with Compiler Explorer
+
+.SH SYNOPSIS
+\fBcex\fR [\fB-h\fR] [\fB--version\fR] [\fB-H\fR \fIURL\fR] [\fB--list-langs\fR] [\fB--list-compilers\fR [\fILANG\fR]] [\fB-c\fR \fICOMPILER\fR] [\fB-l\fR \fILANG\fR] [\fB--cflags\fR \fIFLAGS\fR] [\fB-a\fR \fIARGV\fR [\fIARGV\fR...]] [\fB--stdin\fR \fISTDIN\fR [\fISTDIN\fR...]] [\fB-e\fR] [\fB-s\fR] [\fB-C\fR] [\fB-L\fR] [\fB-v\fR] [\fIfile\fR]
+
+.SH DESCRIPTION
+\fBcex\fR is able to query all available languages, compilers, build and execute your source code. You can also give some extra arguments, like compiler flags, command-line arguments and STDIN.
+
+.SH OPTIONS
+
+.IP "\fB-h\fR, \fB--help\fR"
+Show this help message and exit
+
+.IP "\fB--version\fR"
+Show program's version number and exit
+
+.IP "\fB-H\fR, \fB--host\fR \fIURL\fR"
+Specify the Compiler Explorer host
+
+.IP "\fB--list-langs\fR"
+List available languages
+
+.IP "\fB--list-compilers\fR [\fILANG\fR]"
+List available compilers
+
+.IP "\fB-c\fR, \fB--compiler\fR \fICOMPILER\fR"
+Specify the compiler
+
+.IP "\fB-l\fR, \fB--language\fR \fILANG\fR"
+Specify the language
+
+.IP "\fB--cflags\fR \fIFLAGS\fR"
+Specify compiler flags
+
+.IP "\fB-a\fR, \fB--args\fR \fIARGV\fR [\fIARGV\fR...]"
+Specify the command-line arguments
+
+.IP "\fB--stdin\fR \fISTDIN\fR [\fISTDIN\fR...]"
+Specify the command-line STDIN
+
+.IP "\fB-e\fR, \fB--exec\fR"
+Execute the code
+
+.IP "\fB-s\fR, \fB--skip-asm\fR"
+Don't show the generated assembly
+
+.IP "\fB-C\fR, \fB--compare\fR"
+Compare the source code with the assembly
+
+.IP "\fB-L\fR, \fB--link\fR"
+Generate a link for the compilation state
+
+.IP "\fB--verbose\fR"
+Show additional details
+
+.SH AUTHOR
+Gustavo Costa <xfgusta@gmail.com>
+
+.SH BUGS
+Report bugs to <https://github.com/xfgusta/cex/issues>
+
+.SH COPYRIGHT
+Copyright (c) 2022 Gustavo Costa
