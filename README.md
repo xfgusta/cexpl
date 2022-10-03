@@ -2,7 +2,7 @@
 
 Command-line tool to interact with [Compiler Explorer](https://godbolt.org/).
 
-[![asciicast](https://asciinema.org/a/525356.svg)](https://asciinema.org/a/525356)
+[![asciicast](https://asciinema.org/a/525389.svg)](https://asciinema.org/a/525389)
 
 ## Overview
 
