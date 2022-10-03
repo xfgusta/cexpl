@@ -106,6 +106,7 @@ def main(argv):
     parser.add_argument(
         'file',
         nargs='?',
+        metavar='FILE',
         type=argparse.FileType('r'),
         help='File containing the source code'
     )
