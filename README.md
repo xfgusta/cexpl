@@ -138,3 +138,7 @@ print(f'{name}, {age} years old')
 #### Saving your results
 
 You can generate a short link for the compilation with the `-L`/`--link` option.
+
+## License
+
+Copyright (c) 2022 Gustavo Costa. Distributed under the MIT license.
