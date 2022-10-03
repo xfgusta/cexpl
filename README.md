@@ -2,6 +2,8 @@
 
 Command-line tool to interact with [Compiler Explorer](https://godbolt.org/).
 
+[![asciicast](https://asciinema.org/a/525356.svg)](https://asciinema.org/a/525356)
+
 ## Overview
 
 **cex** is able to query all available languages, compilers, build and execute your source code. You can also give some extra arguments, like compiler flags, command-line arguments and STDIN.
