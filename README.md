@@ -6,9 +6,18 @@ Command-line tool to interact with [Compiler Explorer](https://godbolt.org/).
 
 ## Installation
 
+### Fedora Linux
+
+[**cexpl**](https://copr.fedorainfracloud.org/coprs/xfgusta/cexpl/) package from Copr
+
+```text
+dnf copr enable xfgusta/cexpl
+dnf install cexpl
+```
+
 ### PyPI
 
-[`cexpl`](https://pypi.org/project/cexpl/) package from PyPI
+[**cexpl**](https://pypi.org/project/cexpl/) package from PyPI
 
 ```text
 pip install --user cexpl
