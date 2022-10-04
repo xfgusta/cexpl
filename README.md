@@ -4,6 +4,16 @@ Command-line tool to interact with [Compiler Explorer](https://godbolt.org/).
 
 [![asciicast](https://asciinema.org/a/525454.svg)](https://asciinema.org/a/525454)
 
+## Installation
+
+### PyPI
+
+[`cexpl`](https://pypi.org/project/cexpl/) package from PyPI
+
+```text
+pip install --user cexpl
+```
+
 ## Overview
 
 **cexpl** is able to query all available languages, compilers, build and execute your source code. You can also give some extra arguments, like compiler flags, command-line arguments and STDIN.
