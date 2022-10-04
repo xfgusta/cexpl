@@ -5,14 +5,14 @@ import operator
 import os.path
 import sys
 from colorama import Fore, init
-import cex
+import cexpl
 
-api = cex.Cex()
+api = cexpl.Cexpl()
 
 def main(argv):
     """Main CLI entry point"""
     parser = argparse.ArgumentParser(
-        prog='cex',
+        prog='cexpl',
         description='Command-line tool to interact with Compiler Explorer',
         allow_abbrev=False
     )
@@ -20,7 +20,7 @@ def main(argv):
     parser.add_argument(
         '--version',
         action='version',
-        version=f'%(prog)s {cex.__version__}'
+        version=f'%(prog)s {cexpl.__version__}'
     )
 
     parser.add_argument(
@@ -166,9 +166,9 @@ def main(argv):
                 skip_asm,
                 execute
             )
-        except cex.NotFoundError:
+        except cexpl.NotFoundError:
             die(f'Compiler {compiler} not found')
-        except cex.CexError:
+        except cexpl.CexplError:
             die('Failed to compile')
 
         if verbose:
@@ -188,7 +188,7 @@ def main(argv):
                     stdin,
                     execute
                 )
-            except cex.CexError:
+            except cexpl.CexplError:
                 die('Cannot generate the link')
 
             url = link_result['url']
@@ -205,7 +205,7 @@ def list_languages():
     """List available languages"""
     try:
         langs = api.get_languages(fields=['id', 'name'])
-    except cex.CexError:
+    except cexpl.CexplError:
         die('Could not list the available languages')
 
     # sort languages by id
@@ -218,7 +218,7 @@ def list_compilers(name):
     """List available compilers"""
     try:
         compilers = api.get_compilers(name, fields=['id', 'name'])
-    except cex.CexError:
+    except cexpl.CexplError:
         die('Could not list the available compilers')
 
     # sort compilers by id
@@ -293,7 +293,7 @@ def get_compiler_by_lang(language):
     """Get the default compiler for a language"""
     try:
         langs = api.get_languages(fields=['id', 'defaultCompiler'])
-    except cex.CexError:
+    except cexpl.CexplError:
         die('Could not get the list of available languages')
 
     for lang in langs:
@@ -316,7 +316,7 @@ def get_compiler_by_file_ext(filename):
         langs = api.get_languages(
             fields=['name', 'extensions', 'defaultCompiler']
         )
-    except cex.CexError:
+    except cexpl.CexplError:
         die('Could not get the list of available languages')
 
     # filter languages that have the same file extension

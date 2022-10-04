@@ -3,8 +3,8 @@
 import requests
 
 __all__ = [
-    'Cex',
-    'CexError',
+    'Cexpl',
+    'CexplError',
     'RequestError',
     'ResponseError',
     'NotFoundError',
@@ -12,13 +12,13 @@ __all__ = [
     'JSONError'
 ]
 
-class CexError(Exception):
+class CexplError(Exception):
     """Base class for all errors"""
 
-class RequestError(CexError):
+class RequestError(CexplError):
     """An error occurred while handling the request"""
 
-class ResponseError(CexError):
+class ResponseError(CexplError):
     """There was a client or server error"""
 
 class NotFoundError(ResponseError):
@@ -27,10 +27,10 @@ class NotFoundError(ResponseError):
 class ServerError(ResponseError):
     """The API service is having issues"""
 
-class JSONError(CexError):
+class JSONError(CexplError):
     """Couldn't decode the text into json"""
 
-class Cex:
+class Cexpl:
     """Compiler Explorer API consumer"""
     def __init__(self, host='https://godbolt.org'):
         self.set_host(host)

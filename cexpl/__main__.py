@@ -1,4 +1,4 @@
-"""Main entry point for cex and python -m cex"""
+"""Main entry point for cexpl and python -m cexpl"""
 
 import signal
 import sys

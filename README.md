@@ -1,12 +1,12 @@
-# cex
+# cexpl
 
 Command-line tool to interact with [Compiler Explorer](https://godbolt.org/).
 
-[![asciicast](https://asciinema.org/a/525389.svg)](https://asciinema.org/a/525389)
+[![asciicast](https://asciinema.org/a/525454.svg)](https://asciinema.org/a/525454)
 
 ## Overview
 
-**cex** is able to query all available languages, compilers, build and execute your source code. You can also give some extra arguments, like compiler flags, command-line arguments and STDIN.
+**cexpl** is able to query all available languages, compilers, build and execute your source code. You can also give some extra arguments, like compiler flags, command-line arguments and STDIN.
 
 The Compiler Explorer API host can be specified with the `-H`/`--host` option.
 
@@ -15,7 +15,7 @@ The Compiler Explorer API host can be specified with the `-H`/`--host` option.
 The `--list-langs` option lists all languages and their IDs:
 
 ```text
-$ cex --list-langs
+$ cexpl --list-langs
 ada - Ada
 analysis - Analysis
 assembly - Assembly
@@ -36,7 +36,7 @@ The language ID can be used with the `-l`/`--lang` option.
 The `--list-compilers` option lists all compilers and their IDs:
 
 ```text
-$ cex --list-compilers
+$ cexpl --list-compilers
 386_gl114 - 386 gc 1.14
 386_gl115 - 386 gc 1.15
 386_gl116 - 386 gc 1.16
@@ -50,16 +50,16 @@ arduinomega189 - Arduino Mega (1.8.9)
 ...
 ```
 
-It is also possible to list the compilers for a specific language. For example, `cex --list-compilers python` will list all available Python compilers.
+It is also possible to list the compilers for a specific language. For example, `cexpl --list-compilers python` will list all available Python compilers.
 
 The compiler ID can be used with the `-c`/`--compiler` option.
 
 ### Compilation and execution
 
-In order to compile, you need to pass the file containing the source code. **cex** will try to figure out the language and its default compiler based on the file extension. You can specify the language and/or the compiler with `--lang` and/or `--compiler` option, as said above.
+In order to compile, you need to pass the file containing the source code. **cexpl** will try to figure out the language and its default compiler based on the file extension. You can specify the language and/or the compiler with `--lang` and/or `--compiler` option, as said above.
 
 ```text
-$ cex love.c
+$ cexpl love.c
 .LC0:
         .string "<3"
 main:
@@ -90,7 +90,7 @@ You can pass options to the compiler with the `--cflags` option.
 Use the `-C`/`--compare` option to compare the source code with the assembly:
 
 ```text
-$ cex --compare --cflags=-Ofast love.c
+$ cexpl --compare --cflags=-Ofast love.c
 .LC0:
         .string "<3"
 main:
@@ -110,7 +110,7 @@ main:
 The `-e`/`--exec` option executes the code:
 
 ```text
-$ cex --exec --skip-asm love.c
+$ cexpl --exec --skip-asm love.c
 STDOUT:
 <3
 ```
@@ -119,10 +119,10 @@ If you don't want to see the generated assembly, use the `-s`/`--skip-asm` optio
 
 ##### Arguments and input
 
-You can pass a list of arguments with the `-a`/`--args` option. For example, `cex --args one two three --exec main.c`. The same applies to the `--stdin` option:
+You can pass a list of arguments with the `-a`/`--args` option. For example, `cexpl --args one two three --exec main.c`. The same applies to the `--stdin` option:
 
 ```text
-$ cex --skip-asm --exec --stdin "Gustavo Costa" 20 -- hi.py
+$ cexpl --skip-asm --exec --stdin "Gustavo Costa" 20 -- hi.py
 STDOUT:
 Gustavo Costa, 20 years old
 ```
