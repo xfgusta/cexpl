@@ -6,6 +6,16 @@ Command-line tool to interact with [Compiler Explorer](https://godbolt.org/).
 
 ## Installation
 
+### Arch Linux
+
+[**cexpl**](https://aur.archlinux.org/packages/cexpl) package from AUR
+
+```text
+git clone https://aur.archlinux.org/cexpl.git
+cd cexpl
+makepkg -si
+```
+
 ### Fedora Linux
 
 [**cexpl**](https://copr.fedorainfracloud.org/coprs/xfgusta/cexpl/) package from Copr
