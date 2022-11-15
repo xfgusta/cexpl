@@ -119,9 +119,15 @@ def main(argv):
     api.set_host(args.host)
 
     if args.list_langs:
-        list_languages()
+        try:
+            list_languages()
+        except cexpl.CexplError:
+            die('Could not list the available languages')
     elif args.list_compilers is not False:
-        list_compilers(args.list_compilers)
+        try:
+            list_compilers(args.list_compilers)
+        except cexpl.CexplError:
+            die('Could not list the available compilers')
     else:
         file = args.file
         if not file:
@@ -143,10 +149,13 @@ def main(argv):
 
         # try to get the default compiler if none was given
         if not compiler:
-            if lang:
-                compiler = get_compiler_by_lang(lang)
-            else:
-                compiler = get_compiler_by_file_ext(file.name)
+            try:
+                if lang:
+                    compiler = get_compiler_by_lang(lang)
+                else:
+                    compiler = get_compiler_by_file_ext(file.name)
+            except:
+                die('Could not get the list of available languages')
 
             if not compiler:
                 die('Could not determine the default compiler')
@@ -203,10 +212,7 @@ def main(argv):
 
 def list_languages():
     """List available languages"""
-    try:
-        langs = api.get_languages(fields=['id', 'name'])
-    except cexpl.CexplError:
-        die('Could not list the available languages')
+    langs = api.get_languages(fields=['id', 'name'])
 
     # sort languages by id
     langs.sort(key=operator.itemgetter('id'))
@@ -216,10 +222,7 @@ def list_languages():
 
 def list_compilers(name):
     """List available compilers"""
-    try:
-        compilers = api.get_compilers(name, fields=['id', 'name'])
-    except cexpl.CexplError:
-        die('Could not list the available compilers')
+    compilers = api.get_compilers(name, fields=['id', 'name'])
 
     # sort compilers by id
     compilers.sort(key=operator.itemgetter('id'))
@@ -291,10 +294,7 @@ def show_output(stdout, stderr):
 
 def get_compiler_by_lang(language):
     """Get the default compiler for a language"""
-    try:
-        langs = api.get_languages(fields=['id', 'defaultCompiler'])
-    except cexpl.CexplError:
-        die('Could not get the list of available languages')
+    langs = api.get_languages(fields=['id', 'defaultCompiler'])
 
     for lang in langs:
         if lang['id'] == language:
@@ -312,12 +312,7 @@ def get_compiler_by_file_ext(filename):
     if ext == '.c':
         return get_compiler_by_lang('c')
 
-    try:
-        langs = api.get_languages(
-            fields=['name', 'extensions', 'defaultCompiler']
-        )
-    except cexpl.CexplError:
-        die('Could not get the list of available languages')
+    langs = api.get_languages(fields=['name', 'extensions', 'defaultCompiler'])
 
     # filter languages that have the same file extension
     langs = list(filter(lambda lang: ext in lang['extensions'], langs))
