@@ -69,6 +69,12 @@ class Cexpl:
 
         return _request('GET', url, params={'fields': fields})
 
+    def get_libraries(self, name):
+        """Return a list of libraries"""
+        url = f'{self._api}/libraries/{name}'
+
+        return _request('GET', url)
+
     def compile_src(
         self,
         src,

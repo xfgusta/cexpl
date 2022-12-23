@@ -45,6 +45,12 @@ def main(argv):
     )
 
     parser.add_argument(
+        '--list-libs',
+        metavar='LANG',
+        help='List available libraries'
+    )
+
+    parser.add_argument(
         '-c', '--compiler',
         help='Specify the compiler'
     )
@@ -128,6 +134,11 @@ def main(argv):
             list_compilers(args.list_compilers)
         except cexpl.CexplError:
             die('Could not list the available compilers')
+    elif args.list_libs:
+        try:
+            list_libraries(args.list_libs)
+        except cexpl.CexplError:
+            die('Could not list the available libraries')
     else:
         file = args.file
         if not file:
@@ -229,6 +240,16 @@ def list_compilers(name):
 
     for compiler in compilers:
         print(f'{Fore.GREEN}{compiler["id"]}{Fore.RESET} - {compiler["name"]}')
+
+def list_libraries(name):
+    """List available libraries"""
+    libs = api.get_libraries(name)
+
+    # sort libraries by id
+    libs.sort(key=operator.itemgetter('id'))
+
+    for lib in libs:
+        print(f'{Fore.GREEN}{lib["id"]}{Fore.RESET} - {lib["name"]}')
 
 def process_asm(asm_result, src, compare=False):
     """Process asm and compare it to src if necessary"""
